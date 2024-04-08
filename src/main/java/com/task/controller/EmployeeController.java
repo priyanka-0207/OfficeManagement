@@ -22,45 +22,49 @@ import com.task.service.EmployeeService;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeService employeeService;
+	@Autowired
+	private EmployeeService employeeService;
 
-    @PostMapping
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
-        return ResponseEntity.ok(employeeService.saveEmployee(employee));
-    }
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getEmployeeById(@PathVariable Long id) {
-        Optional<Employee> employee = employeeService.getEmployeeById(id);
-        if (employee.isPresent()) {
-            return new ResponseEntity<>(employee.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Employee not found with ID: " + id, HttpStatus.NOT_FOUND);
-        }
-    }
+	@PostMapping
+	public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
+		return ResponseEntity.ok(employeeService.saveEmployee(employee));
+	}
 
-    
-    @GetMapping
-    public ResponseEntity<List<Employee>> getAllEmployees() {
-        List<Employee> employees = employeeService.getAllEmployees();
-        if (employees.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(employees, HttpStatus.OK);
-    }
-    
-    @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
-        Employee updatedEmployee = employeeService.updateEmployee(id, employeeDetails);
-        return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
-    }
-    
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable Long id) {
-        employeeService.deleteEmployee(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getEmployeeById(@PathVariable Long id) {
+		Optional<Employee> employee = employeeService.getEmployeeById(id);
+		if (employee.isPresent()) {
+			return new ResponseEntity<>(employee.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Employee not found with ID: " + id, HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@GetMapping
+	public ResponseEntity<List<Employee>> getAllEmployees() {
+		List<Employee> employees = employeeService.getAllEmployees();
+		if (employees.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<>(employees, HttpStatus.OK);
+	}
+
+	@GetMapping("/total")
+	public ResponseEntity<Integer> getTotalEmployees() {
+		int totalEmployees = employeeService.getTotalEmployees();
+		return ResponseEntity.ok(totalEmployees);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employeeDetails) {
+		Employee updatedEmployee = employeeService.updateEmployee(id, employeeDetails);
+		return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable Long id) {
+		employeeService.deleteEmployee(id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 }
-

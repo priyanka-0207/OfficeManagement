@@ -25,6 +25,11 @@ public class DepartmentService {
 	public Optional<Department> findById(Long id) {
 		return departmentRepository.findById(id);
 	}
+	
+	public int getTotalDepartments() {
+		List<Department> departments = departmentRepository.findAll();
+		return departments.size();
+	}
 
 	public Department update(Long id, Department departmentDetails) {
 		Department department = departmentRepository.findById(id)

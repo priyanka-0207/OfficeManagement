@@ -26,6 +26,11 @@ public class EmployeeService {
 		return employeeRepository.findByIdWithDepartments(id);
 	}
 
+	public int getTotalEmployees() {
+		List<Employee> employees = employeeRepository.findAll();
+		return employees.size();
+	}
+
 	public Employee updateEmployee(Long id, Employee employeeDetails) {
 		Employee employee = employeeRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Employee not found for this id :: " + id));

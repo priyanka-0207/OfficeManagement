@@ -39,6 +39,12 @@ public class DepartmentController {
 		return departmentService.findById(id).map(ResponseEntity::ok)
 				.orElseGet(() -> ResponseEntity.notFound().build());
 	}
+	
+	@GetMapping("/total")
+	public ResponseEntity<Integer> getTotalDepartments() {
+		int totalEmployees = departmentService.getTotalDepartments();
+		return ResponseEntity.ok(totalEmployees);
+	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<Department> updateDepartment(@PathVariable Long id,
